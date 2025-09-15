@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  talabat-pos-platform:
+    build: .
+    container_name: talabat-pos-platform
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=sqlite:/app/data/talabat_pos.db
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+      - ./backups:/app/backups
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - talabat-network
+
+  # Optional: Add nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: talabat-pos-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - talabat-pos-platform
+    restart: unless-stopped
+    networks:
+      - talabat-network
+
+  # Optional: Add database for production
+  postgres:
+    image: postgres:15-alpine
+    container_name: talabat-pos-postgres
+    environment:
+      - POSTGRES_DB=talabat_pos
+      - POSTGRES_USER=talabat
+      - POSTGRES_PASSWORD=your-secure-password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    networks:
+      - talabat-network
+    profiles:
+      - production
+
+  # Optional: Add Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: talabat-pos-redis
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - talabat-network
+    profiles:
+      - production
+
+networks:
+  talabat-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

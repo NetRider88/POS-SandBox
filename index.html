@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talabat POS Integration Testing Platform</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-rocket"></i> Talabat POS Integration Platform</h1>
+            <p>testing environment for aggregator POS integrations</p>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="exportConfiguration()">
+                    <i class="fas fa-download"></i> Export Config
+                </button>
+                <button class="btn btn-outline" onclick="importConfiguration()">
+                    <i class="fas fa-upload"></i> Import Config
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="showTab('configuration')">Configuration</button>
+                <button class="tab-btn" onclick="showTab('testing')">Testing</button>
+                <button class="tab-btn" onclick="showTab('monitoring')">Monitoring</button>
+                <button class="tab-btn" onclick="showTab('reports')">Reports</button>
+            </div>
+
+            <!-- Configuration Tab -->
+            <div id="configuration-tab" class="tab-content active">
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-cog"></i> Integration Configuration
+                    </div>
+                    <div class="section-content">
+                        <div class="grid">
+                            <div>
+                                <div class="form-group">
+                                    <label>Integration Name:</label>
+                                    <input type="text" id="integrationName" placeholder="e.g., Perfect Integration Singapore">
+                                </div>
+                                <div class="form-group">
+                                    <label>Integration Code:</label>
+                                    <input type="text" id="integrationCode" placeholder="e.g., perfect-integration-sg">
+                                </div>
+                                <div class="form-group">
+                                    <label>Base URL:</label>
+                                    <input type="url" id="baseUrl" placeholder="https://api.yourintegration.com/">
+                                </div>
+                                <div class="form-group">
+                                    <label>Environment:</label>
+                                    <select id="environment">
+                                        <option value="staging">Staging</option>
+                                        <option value="production">Production</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label>Plugin Username:</label>
+                                    <input type="text" id="pluginUsername" placeholder="Your plugin username">
+                                </div>
+                                <div class="form-group">
+                                    <label>Plugin Password:</label>
+                                    <input type="password" id="pluginPassword" placeholder="Your plugin password">
+                                </div>
+                                <div class="form-group">
+                                    <label>Country:</label>
+                                    <select id="country">
+                                        <option value="AE">UAE</option>
+                                        <option value="SA">Saudi Arabia</option>
+                                        <option value="KW">Kuwait</option>
+                                        <option value="BH">Bahrain</option>
+                                        <option value="OM">Oman</option>
+                                        <option value="QA">Qatar</option>
+                                        <option value="JO">Jordan</option>
+                                        <option value="EG">Egypt</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Region:</label>
+                                    <select id="regionSelect">
+                                        <option value="me">Middle East + Turkey</option>
+                                        <option value="eu">Europe</option>
+                                        <option value="apac">Asia Pacific</option>
+                                        <option value="latam">Latin America</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn" onclick="validateConfiguration()">
+                                <i class="fas fa-check"></i> Validate Configuration
+                            </button>
+                            <button class="btn btn-success" onclick="saveConfiguration()">
+                                <i class="fas fa-save"></i> Save Configuration
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Tab -->
+            <div id="testing-tab" class="tab-content">
+                <!-- Authentication Section -->
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-lock"></i> Authentication Testing
+                        <div class="status-badge" id="auth-badge">Not Tested</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Test Authentication Flow:</label>
+                            <div class="status-display">
+                                <span class="status-indicator status-pending" id="auth-status"></span>
+                                <span id="auth-text">Ready to test</span>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn" onclick="testAuthentication()">
+                                <i class="fas fa-key"></i> Test Login API
+                            </button>
+                            <button class="btn btn-warning" onclick="testTokenRefresh()">
+                                <i class="fas fa-sync"></i> Test Token Refresh
+                            </button>
+                        </div>
+                        <div class="test-results" id="auth-results" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Order Management Testing -->
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-box"></i> Order Management Testing
+                        <div class="status-badge" id="order-badge">Not Tested</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="grid">
+                            <div>
+                                <h4>Integration Flow Type:</h4>
+                                <div class="form-group">
+                                    <select id="integrationFlow">
+                                        <option value="direct">Direct Integration</option>
+                                        <option value="indirect">Indirect Integration</option>
+                                    </select>
+                                </div>
+                                
+                                <h4>Order Scenarios to Test:</h4>
+                                <div class="form-group checkbox-group">
+                                    <label><input type="checkbox" id="test-order-receive" checked> Order Reception</label>
+                                    <label><input type="checkbox" id="test-order-accept" checked> Order Acceptance</label>
+                                    <label><input type="checkbox" id="test-order-reject" checked> Order Rejection</label>
+                                    <label><input type="checkbox" id="test-order-cancel" checked> Order Cancellation</label>
+                                    <label><input type="checkbox" id="test-order-status" checked> Order Status Updates</label>
+                                    <label><input type="checkbox" id="test-auto-accept" checked> Auto-Accept Functionality</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Test Order Configuration:</h4>
+                                <div class="form-group">
+                                    <label>Vendor Code:</label>
+                                    <input type="text" id="vendorCode" placeholder="e.g., vndr">
+                                </div>
+                                <div class="form-group">
+                                    <label>Remote ID:</label>
+                                    <input type="text" id="remoteId" placeholder="e.g., 123456">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="btn" onclick="testOrderManagement()">
+                                <i class="fas fa-play"></i> Start Order Testing
+                            </button>
+                            <button class="btn btn-warning" onclick="simulateOrderScenarios()">
+                                <i class="fas fa-random"></i> Simulate All Scenarios
+                            </button>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="order-progress"></div>
+                        </div>
+                        
+                        <div class="test-results" id="order-results" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Additional testing sections will follow the same pattern -->
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-utensils"></i> Catalog Management Testing
+                        <div class="status-badge" id="catalog-badge">Not Tested</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="grid">
+                            <div>
+                                <h4>Catalog Import Testing:</h4>
+                                <div class="form-group">
+                                    <label>Test Catalog JSON:</label>
+                                    <textarea id="catalogJson" rows="6" placeholder='Upload or paste catalog JSON'></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Callback URL:</label>
+                                    <input type="url" id="callbackUrl" placeholder="https://your-callback-url.com/webhook">
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Catalog Validation Checks:</h4>
+                                <div class="form-group checkbox-group">
+                                    <label><input type="checkbox" id="test-catalog-structure" checked> JSON Structure Validation</label>
+                                    <label><input type="checkbox" id="test-menu-items" checked> Menu Items Validation</label>
+                                    <label><input type="checkbox" id="test-pricing" checked> Pricing Validation</label>
+                                    <label><input type="checkbox" id="test-images" checked> Image Requirements</label>
+                                    <label><input type="checkbox" id="test-availability" checked> Availability Rules</label>
+                                    <label><input type="checkbox" id="test-centralized" checked> Centralized Kitchen Support</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="btn" onclick="testCatalogManagement()">
+                                <i class="fas fa-upload"></i> Test Catalog Import
+                            </button>
+                            <button class="btn btn-success" onclick="generateSampleCatalog()">
+                                <i class="fas fa-file-code"></i> Generate Sample
+                            </button>
+                            <button class="btn btn-warning" onclick="validateCatalogStructure()">
+                                <i class="fas fa-check-circle"></i> Validate Structure
+                            </button>
+                        </div>
+                        
+                        <div class="test-results" id="catalog-results" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Tab -->
+            <div id="monitoring-tab" class="tab-content">
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-line"></i> Real-time Monitoring
+                    </div>
+                    <div class="section-content">
+                        <div class="monitoring-grid">
+                            <div class="metric-card">
+                                <h3>API Response Time</h3>
+                                <div class="metric-value" id="response-time">--ms</div>
+                                <canvas id="response-chart" width="200" height="100"></canvas>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Success Rate</h3>
+                                <div class="metric-value" id="success-rate">--%</div>
+                                <canvas id="success-chart" width="200" height="100"></canvas>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Active Orders</h3>
+                                <div class="metric-value" id="active-orders">--</div>
+                            </div>
+                            <div class="metric-card">
+                                <h3>System Status</h3>
+                                <div class="metric-value" id="system-status">Monitoring...</div>
+                            </div>
+                        </div>
+                        
+                        <div class="log-container" id="live-logs">
+                            <h4><i class="fas fa-terminal"></i> Live System Logs</h4>
+                            <div id="logs-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-content">
+                <div class="test-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-bar"></i> Reports & Analytics
+                    </div>
+                    <div class="section-content">
+                        <div class="grid">
+                            <div>
+                                <div class="form-group">
+                                    <label>Date Range From:</label>
+                                    <input type="date" id="reportFromDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date Range To:</label>
+                                    <input type="date" id="reportToDate">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label>Report Type:</label>
+                                    <select id="reportType">
+                                        <option value="completed">Completed Orders</option>
+                                        <option value="cancelled">Cancelled Orders</option>
+                                        <option value="all">All Orders</option>
+                                        <option value="performance">Performance Report</option>
+                                        <option value="errors">Error Analysis</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Format:</label>
+                                    <select id="reportFormat">
+                                        <option value="json">JSON</option>
+                                        <option value="csv">CSV</option>
+                                        <option value="pdf">PDF</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="btn" onclick="generateReport()">
+                                <i class="fas fa-file-alt"></i> Generate Report
+                            </button>
+                            <button class="btn btn-success" onclick="scheduleReport()">
+                                <i class="fas fa-clock"></i> Schedule Report
+                            </button>
+                        </div>
+                        
+                        <div class="test-results" id="report-results" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comprehensive Testing Section -->
+            <div class="test-section full-test-section">
+                <div class="section-header">
+                    <i class="fas fa-flask"></i> Complete Integration Test Suite
+                </div>
+                <div class="section-content">
+                    <div class="form-group">
+                        <h4>Complete Integration Test Suite:</h4>
+                        <p>Run all tests in sequence and generate a comprehensive compliance report.</p>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-success btn-large" onclick="runFullTestSuite()">
+                            <i class="fas fa-play-circle"></i> Run Complete Test Suite
+                        </button>
+                        <button class="btn btn-danger" onclick="resetAllTests()">
+                            <i class="fas fa-redo"></i> Reset All Tests
+                        </button>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="full-test-progress"></div>
+                        <span class="progress-text" id="full-test-progress-text">0%</span>
+                    </div>
+                    
+                    <div class="log-container" id="test-logs" style="display: none;">
+                        <h4><i class="fas fa-terminal"></i> Test Execution Logs</h4>
+                        <div id="logs-content-test"></div>
+                    </div>
+                    
+                    <div class="test-results" id="full-test-results" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Success Section -->
+            <div class="booking-section hidden" id="booking-section">
+                <h2><i class="fas fa-check-circle"></i> All Tests Passed Successfully!</h2>
+                <p>Your integration is ready for production. Schedule a live testing session with our engineering team.</p>
+                <a href="https://calendly.com/talabat-integration-team" class="booking-btn" target="_blank">
+                    <i class="fas fa-calendar"></i> Schedule Live Testing Session
+                </a>
+                <p class="booking-note">
+                    During the live session, we'll verify your integration in real-time and complete the onboarding process.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p id="loading-text">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/testing.js"></script>
+    <script src="js/monitoring.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
