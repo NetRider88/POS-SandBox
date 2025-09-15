@@ -27,8 +27,8 @@
     "orders",
     "catalog"
   ],
-  "author": "Talabat Integration Team",
-  "license": "MIT",
+  "author": "John Mosaad <your-email@domain.com>",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"

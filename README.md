@@ -338,19 +338,85 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 - **Webhook Timeouts** - Verify endpoint accessibility
 - **IP Whitelist Issues** - Confirm regional IP configuration
 
-## 📄 License
+## 📄 License & Usage Rights
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 🔒 **Personal Property Notice**
+
+This project is the **personal intellectual property** of **John Mosaad**. All rights are reserved.
+
+### ⚖️ **Usage Terms & Conditions**
+
+- **📧 Permission Required**: Any usage, modification, distribution, or commercial use of this software requires **explicit written permission** from the owner.
+- **🚫 No Unauthorized Use**: Unauthorized use, copying, modification, or distribution is strictly prohibited.
+- **💼 Commercial Use**: Commercial usage requires a separate license agreement.
+- **🎓 Educational Use**: Educational and learning purposes may be permitted with proper attribution and prior approval.
+
+### 📞 **Permission & Licensing Requests**
+
+To request permission for any usage, please contact:
+
+- **👤 Owner**: John Mosaad
+- **📧 Email**: [your-email@domain.com]
+- **💼 LinkedIn**: [Your LinkedIn Profile]
+- **🐙 GitHub**: [@NetRider88](https://github.com/NetRider88)
+
+### 📋 **What Requires Permission:**
+
+- ✅ Personal use for learning and testing
+- ❌ Commercial use or deployment
+- ❌ Redistribution or sharing
+- ❌ Modification and derivative works
+- ❌ Integration into other projects
+- ❌ Use in corporate environments
+- ❌ Selling or monetizing
+
+### 🔐 **Copyright Notice**
+
+```
+Copyright © 2025 John Mosaad. All Rights Reserved.
+
+This software and associated documentation files (the "Software") are proprietary 
+and confidential to John Mosaad. No part of this Software may be reproduced, 
+distributed, or transmitted in any form or by any means, including photocopying, 
+recording, or other electronic or mechanical methods, without the prior written 
+permission of the owner, except in the case of brief quotations embodied in 
+critical reviews and certain other noncommercial uses permitted by copyright law.
+```
+
+### ⚠️ **Disclaimer**
+
+This software is provided "AS IS" without warranty of any kind. The owner shall not be liable for any damages arising from the use of this software.
 
 ## 🙏 Acknowledgments
 
 - Talabat Engineering Team
 - POS Integration Partners
-- Open Source Community
+- Open Source Community Contributors
 - Testing and QA Teams
 
 ---
 
-**Made with ❤️ by the Talabat Integration Team**
+## 👨‍💻 **About the Creator**
+
+**Made with ❤️ by John Mosaad**
+
+Professional software developer specializing in enterprise POS integration solutions and modern web applications.
+
+### 🌟 **Key Features of This Project:**
+- Enterprise-grade architecture
+- Production-ready security
+- Comprehensive testing suite
+- Real-time monitoring
+- Professional documentation
+
+---
+
+## 📞 **Support & Contact**
+
+For questions, licensing inquiries, or collaboration opportunities:
+
+- **📧 Contact**: [your-email@domain.com]
+- **💼 Professional**: [LinkedIn Profile]
+- **🐙 Code**: [@NetRider88](https://github.com/NetRider88)
 
 For live testing sessions and production onboarding, please [schedule a session](https://calendly.com/talabat-integration-team) with our engineering team.
