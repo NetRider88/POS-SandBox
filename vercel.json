@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "talabat-pos-platform",
+  "description": "Talabat POS Integration Testing Platform",
   "builds": [
     {
       "src": "vercel-server.js",
