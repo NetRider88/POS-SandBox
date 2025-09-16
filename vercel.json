@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "name": "talabat-pos-platform",
+  "builds": [
+    {
+      "src": "vercel-server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/vercel-server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/vercel-server.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "vercel-server.js": {
+      "maxDuration": 30
+    }
+  }
+}

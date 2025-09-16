@@ -1,0 +1,14 @@
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 300
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "PORT": "$PORT"
+  }
+}

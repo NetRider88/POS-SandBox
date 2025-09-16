@@ -12,9 +12,12 @@
     "lint:fix": "eslint . --fix",
     "setup": "npm install && npm run setup:db",
     "setup:db": "node -e \"require('./server.js')\"",
-    "build": "echo 'No build step required for this project'",
+    "build": "echo 'Building for Vercel deployment'",
+    "vercel-build": "echo 'Vercel build complete'",
     "docker:build": "docker build -t talabat-pos-platform .",
-    "docker:run": "docker run -p 3000:3000 talabat-pos-platform"
+    "docker:run": "docker run -p 3000:3000 talabat-pos-platform",
+    "heroku-postbuild": "echo 'No build step required'",
+    "railway:deploy": "npm start"
   },
   "keywords": [
     "talabat",
