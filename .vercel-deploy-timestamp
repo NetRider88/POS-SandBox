@@ -1,0 +1,4 @@
+Vercel deployment forced at: 2025-09-15T12:17:00Z
+This file forces Vercel to recognize changes and deploy the latest commit with SQLite fixes.
+Latest commit should be: b1c95c4 or newer
+Contains: vercel-server.js, vercel.json, and all SQLite compatibility fixes

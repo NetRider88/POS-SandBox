@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "talabat-pos-platform",
-  "description": "Talabat POS Integration Testing Platform",
+  "description": "Talabat POS Integration Testing Platform - SQLite Fixed",
   "builds": [
     {
       "src": "vercel-server.js",
@@ -19,11 +19,23 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "VERCEL": "1"
   },
   "functions": {
     "vercel-server.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
 }
