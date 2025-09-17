@@ -1,0 +1,12 @@
+node_modules
+.git
+.env
+*.log
+coverage
+.DS_Store
+server.js
+vercel-server.js
+docker-compose.yml
+Dockerfile
+start.sh
+.env.example
