@@ -10,7 +10,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
 
 // In-memory storage
 let storage = {
@@ -110,9 +109,9 @@ app.post('/api/test', (req, res) => {
   res.json({ success: true, data: result });
 });
 
-// Serve static files
+// Root route - redirect to public index
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.redirect('/public/index.html');
 });
 
 // Catch all handler
