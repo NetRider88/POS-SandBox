@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "name": "talabat-pos-platform",
-  "description": "Minimal Talabat POS Integration Platform for Vercel",
   "functions": {
     "api/index.js": {
       "maxDuration": 30
