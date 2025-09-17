@@ -109,13 +109,15 @@ app.post('/api/test', (req, res) => {
   res.json({ success: true, data: result });
 });
 
-// Root route - redirect to public index
-app.get('/', (req, res) => {
-  res.redirect('/public/index.html');
-});
+// Root route removed - handled by Vercel static routing
 
-// Catch all handler
+// API catch all handler (only for non-static routes)
 app.get('*', (req, res) => {
+  // Skip if it's a static file request
+  if (req.path.includes('/styles/') || req.path.includes('/js/') || req.path.includes('/images/') || req.path.includes('/assets/')) {
+    return res.status(404).json({ error: 'Static file not found' });
+  }
+  
   res.json({
     message: '🚀 Talabat POS Integration Platform API',
     endpoints: [
