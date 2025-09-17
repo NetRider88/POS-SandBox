@@ -111,24 +111,6 @@ app.post('/api/test', (req, res) => {
 
 // Root route removed - handled by Vercel static routing
 
-// API catch all handler (only for non-static routes)
-app.get('*', (req, res) => {
-  // Skip if it's a static file request
-  if (req.path.includes('/styles/') || req.path.includes('/js/') || req.path.includes('/images/') || req.path.includes('/assets/')) {
-    return res.status(404).json({ error: 'Static file not found' });
-  }
-  
-  res.json({
-    message: '🚀 Talabat POS Integration Platform API',
-    endpoints: [
-      'GET /api/health',
-      'GET /api/configurations',
-      'POST /api/configurations',
-      'GET /api/logs',
-      'POST /api/logs',
-      'POST /api/test'
-    ]
-  });
-});
+// API routes only - no catch-all handler needed
 
 module.exports = app;
