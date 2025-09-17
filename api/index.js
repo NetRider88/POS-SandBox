@@ -109,7 +109,14 @@ app.post('/api/test', (req, res) => {
   res.json({ success: true, data: result });
 });
 
-// Root route removed - handled by Vercel static routing
+// Serve the main HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+// Serve static files
+app.use('/styles', express.static(path.join(__dirname, '../styles')));
+app.use('/js', express.static(path.join(__dirname, '../js')));
 
 // API routes only - no catch-all handler needed
 
